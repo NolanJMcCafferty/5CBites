@@ -14,7 +14,7 @@ Start thinking about milestone II (Gianluca, Dalton + Shane)
 #### II) Have basic framework for milestone II (due Sunday) ready for quesitons  (Gianluca + Dalton + Shane) 
 
 ---Info below TBU----- 
-## ***3/8 (Sunday) MILESTONE 2 DUE.
+## ***3/8 (Sunday) MILESTONE 2 DUE.***
 Quick meet to figure out specific tasks
 
 ## *** 3/9 In class presentation. 
@@ -30,13 +30,15 @@ Individual meal search functionality
 
 ## By 3/30:
 Write script to generate synthetic user reviews
-By 4/5 : Implementation Checkpoint (Milestone 3):
+
+## By 4/5 - ***Implementation Checkpoint (Milestone 3)***:
 Working daily menus for 5C dining halls
 Generated user reviews of dining hall meals
 
 ## By 4/19:
 Implement recommender system for meals
 Added parameters to meal search
+
 ## By 5/4:
 Final presentation
 Clean up and UI or implementation bugs
