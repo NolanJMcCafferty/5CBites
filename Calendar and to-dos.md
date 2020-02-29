@@ -1,6 +1,8 @@
 ##By 2/28 (Friday) 
-#### I) Very clear and specific functionalities of DB system (Gianluca + Dalton + Shane)
-  **Important to start working on milestone II  
+#### I) ~Very clear and specific functionalities of DB system (Gianluca + Dalton + Shane)~ 
+UNDER NEW "SPECS" DOC
+  **Important to start working on milestone II 
+  
 #### II) List of what food data we will and will not have (Tyler + Nolan)
   **Important to start working on milestone II  
   -If possible, add type ( food name = string, calories = int etc.. ) 
