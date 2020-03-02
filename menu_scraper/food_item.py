@@ -1,9 +1,8 @@
 
 class FoodItem():
 
-	def __init__(self, name, tier=None):
+	def __init__(self, name):
 		self.name = name
-		self.tier = tier
 
 	def __str__(self):
-		return f"name: {self.name}, tier: {self.tier}"
+		return f"\t - {self.name}"

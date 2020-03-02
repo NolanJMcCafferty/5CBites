@@ -1,11 +1,12 @@
 import json
+import sys
+import time
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from datetime import datetime
 from station import Station
 from menu import Menu
 from food_item import FoodItem
-
 
 class MenuScraper():
 
@@ -31,9 +32,10 @@ class MenuScraper():
 		options = webdriver.ChromeOptions()
 		# options.add_argument('--headless')
 		
+		platform = sys.platform if sys.platform == 'linux' else 'mac'
 		self.driver = webdriver.Chrome(
 			options=options, 
-			executable_path='../menu_scraper/chromedriver'
+			executable_path=f'../menu_scraper/chromedriver_{platform}'
 		)
 
 		self.menus = []
@@ -42,7 +44,7 @@ class MenuScraper():
 		# self.scrape_bon_appetite_menus()
 		# self.scrape_sodexo_menus()
 		self.scrape_pomona_menus()
-		self.print_menus()
+		# self.print_menus()
 		self.close_driver()
 		
 
@@ -70,8 +72,8 @@ class MenuScraper():
 						
 						for food_id in station['items']:
 							food_item = FoodItem(
-								name=food_id_to_items[food_id]['label'],
-								tier=int(food_id_to_items[food_id]['tier']),
+								name=food_id_to_items[food_id]['label']
+								# tier=int(food_id_to_items[food_id]['tier']),
 							)
 							menu_station.add_food_item(food_item)
 
@@ -121,6 +123,8 @@ class MenuScraper():
 			url = f"https://www.pomona.edu/administration/dining/menus/{dining_hall}"
 			self.driver.get(url)
 
+			self.remove_cookie_popup()
+
 			menu_headers = self.driver.find_elements_by_class_name('ui-accordion-header')
 			menu_content = self.driver.find_elements_by_class_name('ui-accordion-content')
 
@@ -129,11 +133,13 @@ class MenuScraper():
 					if day.get_attribute('aria-selected') == "false":
 						actions = ActionChains(self.driver)
 						actions.move_to_element(day).click().perform()
+						time.sleep(.5)
 
 					day_of_week = day.text.split(',')[0].lower()
 					date = datetime.strptime(day.text.title(), "%A, %B %d, %Y").strftime("%Y-%m-%d")
 					
-					for div in content.find_elements_by_xpath('.//*'):
+					divs = content.find_elements_by_xpath(".//*[@class='nutrition-menu-section'] | .//h3 | .//h2")
+					for div in divs:
 						if div.tag_name == 'h2':
 							meal_name = div.text
 
@@ -143,17 +149,22 @@ class MenuScraper():
 							hours = MenuScraper.get_pomona_hours(dining_hall, day_of_week, meal_name)
 							if menu:
 								self.menus.append(menu)
+								print(menu)
 							menu = Menu(dining_hall, date, meal_name, hours)
 							 
 						elif div.tag_name == 'h3':
 							menu_station = Station(div.text)
-						elif div.tag_name == 'div' and div.get_attribute('class') == 'nutrition-menu-section':
-
+							
+						elif div.tag_name == 'div' and div.get_attribute('class') == 'nutrition-menu-section': 
 							for menu_item in div.find_elements_by_class_name('menu-nutrition-item'):
 								food_name = menu_item.find_element_by_class_name('nutrition-name-icons').text
 								food_item = FoodItem(name=food_name)
 								menu_station.add_food_item(food_item)
 							menu.add_station(menu_station)
+
+			# save final menu of each day
+			self.menus.append(menu)
+			print(menu)
 
 
 	def get_pomona_hours(dining_hall, day, meal_name):
@@ -189,6 +200,12 @@ class MenuScraper():
 			hours = '12:00AM-1:00PM'
 
 		return hours
+
+	def remove_cookie_popup(self):
+		try:
+			self.driver.find_element_by_id('cookie-policy-accepted').click()
+		except:
+			pass
 
 
 	def format_hours(start_time, end_time):
