@@ -17,13 +17,17 @@ Start thinking about milestone II (Gianluca, Dalton + Shane)
 
 ---Info below TBU----- 
 ## ***3/8 (Sunday) MILESTONE 2 DUE.***
+Have Clear sketch of UI 
+Have ER Diagram
+Have Data from Surveys 
+Have a Buisness Logic
 Quick meet to figure out specific tasks
 
 ## *** 3/9 In class presentation. 
 
 ## By 3/16:
 Connect MySQL with frontend (“Hello World” application)
-Clear sketch of UI 
+
 
 ## By 3/23:
 Set up scraper to import data to MySQL
