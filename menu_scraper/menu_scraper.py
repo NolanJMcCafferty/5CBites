@@ -8,6 +8,7 @@ from station import Station
 from menu import Menu
 from food_item import FoodItem
 
+
 class MenuScraper():
 
 	# name, cafe_id
@@ -30,7 +31,7 @@ class MenuScraper():
 
 	def __init__(self):
 		options = webdriver.ChromeOptions()
-		# options.add_argument('--headless')
+		options.add_argument('--headless')
 		
 		platform = sys.platform if sys.platform == 'linux' else 'mac'
 		self.driver = webdriver.Chrome(
@@ -42,12 +43,11 @@ class MenuScraper():
 
 	def run(self):
 		# self.scrape_bon_appetite_menus()
-		# self.scrape_sodexo_menus()
-		self.scrape_pomona_menus()
-		# self.print_menus()
+		self.scrape_sodexo_menus()
+		# self.scrape_pomona_menus()
+		self.print_menus()
 		self.close_driver()
 		
-
 	def scrape_bon_appetite_menus(self):
 		for cafe_name, cafe_id in MenuScraper.bon_appetit_dict.items():
 			url = f"https://legacy.cafebonappetit.com/api/2/menus?cafe={cafe_id}"
@@ -61,7 +61,7 @@ class MenuScraper():
 				all_meals = day['cafes'][cafe_id]['dayparts'][0]
 
 				for meal in all_meals:
-					hours = MenuScraper.format_hours(meal['starttime'], meal['endtime'])
+					hours = MenuScraper.format_hours(cafe_name, meal['starttime'], meal['endtime'])
 
 					menu = Menu(cafe_name, day['date'], meal['label'], hours)
 
@@ -72,8 +72,9 @@ class MenuScraper():
 						
 						for food_id in station['items']:
 							food_item = FoodItem(
-								name=food_id_to_items[food_id]['label']
-								# tier=int(food_id_to_items[food_id]['tier']),
+								name=food_id_to_items[food_id]['label'],
+								dining_hall='bon appetite',
+								nutrition_facts=food_id_to_items[food_id]['nutrition_details'],
 							)
 							menu_station.add_food_item(food_item)
 
@@ -102,6 +103,7 @@ class MenuScraper():
 						for menu_item in course['menuItems']:
 							if not hours:
 								hours = MenuScraper.format_hours(
+									cafe_name,
 									menu_item['startTime'].split('T')[1], 
 									menu_item['endTime'].split('T')[1]
 								)
@@ -109,7 +111,9 @@ class MenuScraper():
 								menu = Menu(cafe_name, date, meal_name, hours)
 
 							food_item = FoodItem(
-								name=menu_item['formalName']
+								name=menu_item['formalName'],
+								dining_hall='sodexo',
+								nutrition_facts=menu_item,
 							)
 							menu_station.add_food_item(food_item)
 
@@ -149,7 +153,6 @@ class MenuScraper():
 							hours = MenuScraper.get_pomona_hours(dining_hall, day_of_week, meal_name)
 							if menu:
 								self.menus.append(menu)
-								print(menu)
 							menu = Menu(dining_hall, date, meal_name, hours)
 							 
 						elif div.tag_name == 'h3':
@@ -164,8 +167,6 @@ class MenuScraper():
 
 			# save final menu of each day
 			self.menus.append(menu)
-			print(menu)
-
 
 	def get_pomona_hours(dining_hall, day, meal_name):
 		if dining_hall == 'frary':
@@ -207,14 +208,16 @@ class MenuScraper():
 		except:
 			pass
 
+	def format_hours(dining_hall, start_time, end_time):
+		time_match_str = "%H:%M" if dining_hall in MenuScraper.bon_appetit_dict else "%H:%M:%S"
 
-	def format_hours(start_time, end_time):
-		start_time = datetime.strptime(start_time, "%H:%M:%S").strftime("%I:%M %p").strip('0')
-		end_time = datetime.strptime(end_time, "%H:%M:%S").strftime("%I:%M %p").strip('0')
+		start_time = datetime.strptime(start_time, time_match_str).strftime("%I:%M %p").strip('0')
+		end_time = datetime.strptime(end_time, time_match_str).strftime("%I:%M %p").strip('0')
+		
 		return f"{start_time} - {end_time}"
 
 	def print_menus(self):
-		for menu in menus:
+		for menu in self.menus:
 			print(menu)
 
 	def close_driver(self):
