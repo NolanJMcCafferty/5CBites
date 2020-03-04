@@ -3,7 +3,7 @@
 UNDER NEW "SPECS" DOC
   **Important to start working on milestone II 
   
-#### II) List of what food data we will and will not have (Tyler + Nolan)
+#### II) ~List of what food data we will and will not have (Tyler + Nolan)~
   **Important to start working on milestone II  
   -If possible, add type ( food name = string, calories = int etc.. ) 
 ## 3/1 (Sunday): 
@@ -11,19 +11,23 @@ Quick group meeting so we can touch base (All)
 Start thinking about milestone II (Gianluca, Dalton + Shane)
 
 ## By 4/2 (Tuesday meeting with Wu):
-#### I) Working Scraper for dining hall menu data (Tyler + Nolan) 
+#### I) ~Working Scraper for dining hall menu data (Tyler + Nolan)~ 
    **Doesn't have to be 100%, just smth that works. 
 #### II) Have basic framework for milestone II (due Sunday) ready for quesitons  (Gianluca + Dalton + Shane) 
 
 ---Info below TBU----- 
 ## ***3/8 (Sunday) MILESTONE 2 DUE.***
+Have Clear sketch of UI 
+Have ER Diagram
+Have Data from Surveys 
+Have a Buisness Logic
 Quick meet to figure out specific tasks
 
 ## *** 3/9 In class presentation. 
 
 ## By 3/16:
 Connect MySQL with frontend (“Hello World” application)
-Clear sketch of UI 
+
 
 ## By 3/23:
 Set up scraper to import data to MySQL
