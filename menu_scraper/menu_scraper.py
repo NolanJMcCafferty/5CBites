@@ -31,7 +31,7 @@ class MenuScraper():
 
 	def __init__(self):
 		options = webdriver.ChromeOptions()
-		options.add_argument('--headless')
+		# options.add_argument('--headless')
 		
 		platform = sys.platform if sys.platform == 'linux' else 'mac'
 		self.driver = webdriver.Chrome(
@@ -137,7 +137,7 @@ class MenuScraper():
 					if day.get_attribute('aria-selected') == "false":
 						actions = ActionChains(self.driver)
 						actions.move_to_element(day).click().perform()
-						time.sleep(.5)
+						time.sleep(.75)
 
 					day_of_week = day.text.split(',')[0].lower()
 					date = datetime.strptime(day.text.title(), "%A, %B %d, %Y").strftime("%Y-%m-%d")
@@ -170,13 +170,18 @@ class MenuScraper():
 								except:
 									nutrition_facts = []
 
-								# print(food_name)
-								food_item = FoodItem(
-									name=food_name,
-									dining_hall=dining_hall,
-									nutrition_facts=nutrition_facts,
-								)
-								menu_station.add_food_item(food_item)
+								try:
+									food_item = FoodItem(
+										name=food_name,
+										dining_hall=dining_hall,
+										nutrition_facts=nutrition_facts,
+									)
+									menu_station.add_food_item(food_item)
+								except Exception as e:
+									print(food_name)
+									print(e)
+									exit()
+
 							menu.add_station(menu_station)
 				
 			# save final menu of each day
