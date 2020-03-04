@@ -1,3 +1,4 @@
+import re
 from nutrition_fact import NutritionFact
 from nutrition_fact_constants import sodexo_nutrition_facts
 
@@ -7,7 +8,8 @@ class FoodItem():
 		self.name = name
 		self.nutrition_facts = []
 
-		self.parse_nutrition_facts(dining_hall, nutrition_facts)
+		if nutrition_facts:
+			self.parse_nutrition_facts(dining_hall, nutrition_facts)
 
 	def parse_nutrition_facts(self, dining_hall, nutrition_facts):
 
@@ -20,23 +22,51 @@ class FoodItem():
 
 	def parse_ba_nutrition_facts(self, nutrition_facts):
 		for key, fact_dict in nutrition_facts.items():
-			value = fact_dict['value'] + fact_dict['unit']
 			nutrition_fact = NutritionFact(
-				fact_dict['label'], 
-				value.replace('lessthan', ''),
-				)
+				name=fact_dict['label'], 
+				value=fact_dict['value'].replace('lessthan', ''),
+				units=fact_dict['unit'],
+			)
 			self.nutrition_facts.append(nutrition_fact)
 
 	def parse_sodexo_nutrition_facts(self, nutrition_facts):
 		for fact_name, value in nutrition_facts.items():
 			if fact_name in sodexo_nutrition_facts:
+				value = value.replace('<', '')
 
 				nutrition_fact = NutritionFact(
-					fact_name, 
-					value.replace('<', ''),
+					name=fact_name, 
+					value=re.sub('[a-zA-Z]', '', value),
+					units="".join(re.findall('[a-zA-Z]', value))
 				)
 				self.nutrition_facts.append(nutrition_fact)
 
+	def parse_po_nutrition_facts(self, nutrition_facts):
+		self.add_po_serving_size(nutrition_facts)
+
+		for fact_text in nutrition_facts[1:]:
+			fact_list = re.split('\(|\):', fact_text)
+			
+			nutrition_fact = NutritionFact(
+				name=fact_list[0].strip(),
+				value=fact_list[2].strip(),
+				units=fact_list[1],
+			)
+			self.nutrition_facts.append(nutrition_fact)
+	
+	def add_po_serving_size(self, nutrition_facts):
+		serving_size = re.split(':', nutrition_facts[0])
+		value_list = serving_size[1].strip().split()
+		value = value_list[0]
+		units = " ".join(value_list[1:])
+		
+		nutrition_fact = NutritionFact(
+			name=serving_size[0].strip(),
+			value=value,
+			units=units,
+		)
+
+		self.nutrition_facts.append(nutrition_fact)
 
 	def __str__(self):
 		return (

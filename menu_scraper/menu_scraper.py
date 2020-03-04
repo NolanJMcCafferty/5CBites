@@ -42,9 +42,9 @@ class MenuScraper():
 		self.menus = []
 
 	def run(self):
-		# self.scrape_bon_appetite_menus()
+		self.scrape_bon_appetite_menus()
 		self.scrape_sodexo_menus()
-		# self.scrape_pomona_menus()
+		self.scrape_pomona_menus()
 		self.print_menus()
 		self.close_driver()
 		
@@ -143,6 +143,7 @@ class MenuScraper():
 					date = datetime.strptime(day.text.title(), "%A, %B %d, %Y").strftime("%Y-%m-%d")
 					
 					divs = content.find_elements_by_xpath(".//*[@class='nutrition-menu-section'] | .//h3 | .//h2")
+
 					for div in divs:
 						if div.tag_name == 'h2':
 							meal_name = div.text
@@ -161,10 +162,23 @@ class MenuScraper():
 						elif div.tag_name == 'div' and div.get_attribute('class') == 'nutrition-menu-section': 
 							for menu_item in div.find_elements_by_class_name('menu-nutrition-item'):
 								food_name = menu_item.find_element_by_class_name('nutrition-name-icons').text
-								food_item = FoodItem(name=food_name)
+								
+								try:
+									menu_item.find_element_by_class_name('nutrition-btn').click()
+									nutrition = menu_item.find_element_by_class_name('column-2')
+									nutrition_facts = [fact.text for fact in nutrition.find_elements_by_tag_name('p')]
+								except:
+									nutrition_facts = []
+
+								# print(food_name)
+								food_item = FoodItem(
+									name=food_name,
+									dining_hall=dining_hall,
+									nutrition_facts=nutrition_facts,
+								)
 								menu_station.add_food_item(food_item)
 							menu.add_station(menu_station)
-
+				
 			# save final menu of each day
 			self.menus.append(menu)
 
@@ -225,7 +239,12 @@ class MenuScraper():
 
 
 if __name__ == "__main__":
+	start_time = time.time()
+
 	menu_scraper = MenuScraper()
 	menu_scraper.run()
+
+	time_in_min = (time.time() - start_time) / 60
+	print(f"total time: {time_in_min:.2f} minutes")
 
 	
