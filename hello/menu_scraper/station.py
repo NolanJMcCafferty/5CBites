@@ -16,16 +16,13 @@ class Station:
 	def save(self, meal):
 		nutrition_fact_records = []
 		for food_item in self.food_items:
-			dish, nf_records = food_item.save()
+			dish, nf_records = food_item.save(meal.dining_hall)
 			nutrition_fact_records += nf_records
-			menu_item, created = MenuItem.objects.get_or_create(
+			menu_item, _ = MenuItem.objects.get_or_create(
 				meal=meal,
 				dish=dish,
 				station=self.name
 			)
-
-			if created:
-				menu_item.save()
 
 		return nutrition_fact_records
 

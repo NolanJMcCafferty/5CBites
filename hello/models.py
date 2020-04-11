@@ -26,6 +26,7 @@ class Meal(models.Model):
 class Dish(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=75)
+    dining_hall = models.ForeignKey(DiningHall, on_delete=models.CASCADE, to_field='name')
 
     class Meta:
         managed = True
@@ -39,6 +40,7 @@ class MenuItem(models.Model):
 
     class Meta:
         managed = True
+        unique_together = (("dish", "meal"),)
         db_table = 'MenuItem'
 
 
@@ -121,7 +123,7 @@ class Rating(models.Model):
     forks = models.FloatField()
     comment = models.TextField()
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    dining_hall = models.ForeignKey(DiningHall, on_delete=models.CASCADE)
+    dining_hall = models.ForeignKey(DiningHall, on_delete=models.CASCADE, to_field='name')
 
     class Meta:
         managed = True

@@ -71,11 +71,8 @@ class FoodItem:
 
 		self.nutrition_facts.append(nutrition_fact)
 
-	def save(self):
-		self.dish, created = Dish.objects.get_or_create(name=self.name)
-
-		if created:
-			self.dish.save()
+	def save(self, dining_hall):
+		self.dish, _ = Dish.objects.get_or_create(name=self.name, dining_hall=dining_hall)
 
 		nutrition_fact_records = self.save_nutrition_facts()
 

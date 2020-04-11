@@ -9,10 +9,7 @@ class NutritionFact:
 		self.units = units
 
 	def save(self):
-		nutrition_fact, created = NutritionFacts.objects.get_or_create(name=self.name)
-
-		if created:
-			nutrition_fact.save()
+		nutrition_fact, _ = NutritionFacts.objects.get_or_create(name=self.name)
 
 		return nutrition_fact
 

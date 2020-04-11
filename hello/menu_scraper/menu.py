@@ -20,16 +20,13 @@ class Menu:
 
 	def save(self):
 		dining_hall = DiningHall.objects.filter(name=self.dining_hall).first()
-		self.meal, created = Meal.objects.get_or_create(
+		self.meal, _ = Meal.objects.get_or_create(
 			name=self.meal_name,
 			dining_hall=dining_hall,
 			day_of_week=self.day_of_week,
 			start_time=self.start_time,
 			end_time=self.end_time,
 		)
-
-		if created:
-			self.meal.save()
 
 		self.save_stations()
 
