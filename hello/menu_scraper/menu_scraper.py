@@ -86,6 +86,7 @@ class MenuScraper:
 								name=food_id_to_items[food_id]['label'],
 								dining_hall='bon appetite',
 								nutrition_facts=food_id_to_items[food_id]['nutrition_details'],
+								ingredients=None,
 							)
 							menu_station.add_food_item(food_item)
 
@@ -131,6 +132,7 @@ class MenuScraper:
 									name=menu_item['formalName'],
 									dining_hall='sodexo',
 									nutrition_facts=menu_item,
+									ingredients=None,
 								)
 								menu_station.add_food_item(food_item)
 
@@ -186,14 +188,18 @@ class MenuScraper:
 										menu_item.find_element_by_class_name('nutrition-btn').click()
 										nutrition = menu_item.find_element_by_class_name('column-2')
 										nutrition_facts = [fact.text for fact in nutrition.find_elements_by_tag_name('p')]
+
+										ingredients = menu_item.find_element_by_tag_name('p')[-1].text
 									except:
 										nutrition_facts = []
+										ingredients = None
 
 									try:
 										food_item = FoodItem(
 											name=food_name,
 											dining_hall=dining_hall,
 											nutrition_facts=nutrition_facts,
+											ingredients=ingredients,
 										)
 
 										menu_station.add_food_item(food_item)

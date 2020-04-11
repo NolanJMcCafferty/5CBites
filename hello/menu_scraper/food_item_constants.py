@@ -16,3 +16,8 @@ sodexo_nutrition_facts = [
 	'vitaminC',
 	'portionSize',
 ]
+
+sodexo_dietary_restrictions = [
+	'isVegan',
+	'isVegetarian',
+]
