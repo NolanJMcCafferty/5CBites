@@ -1,2 +1,10 @@
-selenium
-django
+selenium~=3.141.0
+django~=3.0.5
+pytz~=2019.3
+pip~=20.0.2
+wheel~=0.33.6
+cryptography~=2.1.4
+lxml~=4.4.2
+keyring~=10.6.0
+urllib3~=1.25.7
+setuptools~=42.0.2

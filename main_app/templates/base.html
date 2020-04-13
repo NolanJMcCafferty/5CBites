@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}5CBites{% endblock %}</title>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- bootstrap js and css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+
+    {% block style %}{% endblock %}
+</head>
+<body>
+{#  <header>#}
+{#    <h1>5cBitesLogin</h1>#}
+{#    {% if user.is_authenticated %}#}
+{#      Hi {{ user.username }}!#}
+{#      <a href="{% url 'logout' %}">logout</a>#}
+{#    {% else %}#}
+{#      <a href="{% url 'login' %}">login</a>#}
+{#    {% endif %}#}
+{#  </header>#}
+{#  <hr>#}
+    <ul class="base-nav nav justify-content-center dark">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'menus' %}">Menus</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Analytics</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Another Page</a>
+        </li>
+    </ul>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

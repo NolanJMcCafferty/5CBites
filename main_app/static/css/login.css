@@ -1,0 +1,52 @@
+.login-container {
+    position: absolute;
+    width: 25%;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #13232f;
+    padding: 2vh;
+    text-align: center;
+}
+
+.nav-pills > li > a {
+    border-radius: 0 !important;
+}
+.nav-pills > li > a.active {
+    background-color: #1ab188 !important;
+    color: #13232f !important;
+}
+
+.nav-pills > li > a {
+    background-color: #3B5F55;
+    color: #8AA49D;
+}
+
+form {
+    margin-top: 2vh;
+}
+
+.textbox i{
+    width: 26px;
+    color: #1ab188;
+}
+
+label {
+    color: #1ab188;
+    transform: translate(10%, 0);
+}
+
+.btn {
+    width: 40%;
+    background: #1ab188;
+    padding: 5px;
+    color: #13232f;
+}
+.message {
+    color: white;
+    left: 60vh;
+}
+
+#pass {
+    -webkit-text-security: disc;
+}

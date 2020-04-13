@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menus.css' %}">
+ {% endblock %}
+{% block content %}
+
+    <ul class="nav nav-tabs justify-content-center">
+        {% for meal in meal_types %}
+            <li class="nav-item">
+                <a
+                        class="nav-link {% if forloop.counter == 1 %}active{% endif %}"
+                        href="#{{ meal.name }}"
+                        data-toggle="tab">
+                    {{ meal.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        {% for meal_type in meal_types %}
+            <div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="{{ meal_type.name }}">
+                {% for meal in meal_type.meals %}
+                    <div class="meal-container">
+                        <h1>{{ meal.info.dining_hall.name|title }}</h1>
+                        <h3>{{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}</h3>
+
+                        <div class="menu">
+                            {% for station in meal.stations %}
+                                <div class="station-name">{{ station.name|title }}</div>
+
+                                <ul class="menu-items">
+                                    {% for menu_item in station.menu_items %}
+                                        <li class="menu-item">{{ menu_item.dish.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
