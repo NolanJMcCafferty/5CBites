@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dining_hall.css' %}">
+ {% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header"></div>
+
+        <div class="card-body">
+            <ul class="general-info">
+                <li>Name: {{ dining_hall.name }}</li>
+                <li>Forks: {{ average_forks|floatformat:2 }}</li>
+            </ul>
+
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Ratings</div>
+        <div class="card-body">
+            {% for rating in ratings %}
+                <div class="card">
+                    <div class="card-header">
+                        {{ rating.user.username }}:
+                        {{ rating.forks|floatformat:2 }}
+                        <span class="rating-date">{{ rating.datetime|date:'n-j-Y' }}</span>
+                    </div>
+
+                    <div class="card-body">{{ rating.comment }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

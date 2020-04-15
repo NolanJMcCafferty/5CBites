@@ -5,7 +5,7 @@ from abc import ABC
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fivecbites.settings")
 django.setup()
-from hello.models import User, Rating
+from main_app.models import User, Rating
 
 MAX_RATING = 5.0
 

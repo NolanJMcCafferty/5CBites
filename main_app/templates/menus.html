@@ -22,11 +22,15 @@
         {% for meal_type in meal_types %}
             <div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="{{ meal_type.name }}">
                 {% for meal in meal_type.meals %}
-                    <div class="meal-container">
-                        <h1>{{ meal.info.dining_hall.name|title }}</h1>
-                        <h3>{{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}</h3>
+                    <div class="card meal-container">
+                        <div class="card-header">
+                            {{ meal.info.dining_hall.name|title }}
+                            <span class="menu-hours">
+                                {{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}
+                            </span>
+                        </div>
 
-                        <div class="menu">
+                        <div class="card-body menu">
                             {% for station in meal.stations %}
                                 <div class="station-name">{{ station.name|title }}</div>
 

@@ -5,3 +5,15 @@ a:hover {
 .base-nav {
     margin-bottom: 5vh;
 }
+
+.card {
+    margin: 2vh 2vw;
+}
+
+ul {
+    list-style: none;
+}
+
+.rating-date {
+    float: right;
+}

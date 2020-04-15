@@ -1,4 +1,37 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    SCHOOL_CHOICES = [
+        ('Pomona', 'Pomona'),
+        ('Pitzer', 'Pitzer'),
+        ('Claremont McKenna', 'Claremont McKenna'),
+        ('Harvey Mudd', 'Harvey Mudd'),
+        ('Scripps', 'Scripps'),
+    ]
+
+    ROLE_CHOICES = [
+        ('student', 'Student'),
+        ('faculty', 'faculty'),
+        ('staff', 'Staff'),
+        ('other', 'Other')
+    ]
+
+    GRAD_YEAR_CHOICES = [
+        ('2020', '2020'),
+        ('2021', '2021'),
+        ('2022', '2022'),
+        ('2023', '2023'),
+        ('NA', None),
+    ]
+    school = models.CharField(max_length=20, choices=SCHOOL_CHOICES, default='PO')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+    grad_year = models.IntegerField()
+
+    class Meta:
+        managed = True
+        db_table = 'User'
 
 
 class DiningHall(models.Model):
@@ -101,19 +134,6 @@ class NutritionFactsOfDish(models.Model):
         managed = True
         unique_together = (("dish", "nutrition_fact"),)
         db_table = 'NutritionFactsOfDish'
-
-
-class User(models.Model):
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
-    school = models.CharField(max_length=20)
-    role = models.CharField(max_length=20)
-    grad_year = models.IntegerField()
-
-    class Meta:
-        managed = True
-        db_table = 'User'
 
 
 class Rating(models.Model):

@@ -119,3 +119,5 @@ USE_L10N = True
 USE_TZ = False
 
 STATIC_URL = '/main_app/static/'
+
+AUTH_USER_MODEL = 'main_app.User'

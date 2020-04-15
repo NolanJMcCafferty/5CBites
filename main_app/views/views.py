@@ -1,14 +1,32 @@
 import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from main_app.forms import CustomUserCreationForm
 from main_app.models import Meal, MenuItem
 
 
 def sign_up_view(request):
-    return render(request, "login.html", {'message': ''})
+    errors = ''
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+        else:
+            errors = form.errors
+    else:
+        form = CustomUserCreationForm()
+    print(errors)
+    return render(request, 'login.html', {'form': form, 'action': 'signup', 'errors': errors})
 
 
 def login_view(request):
+    print('trying to login')
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -18,9 +36,9 @@ def login_view(request):
             # Redirect to home page
             return redirect('home')
         else:
-            return render(request, "login.html", {'message': 'Invalid Login'})
+            return render(request, "login.html", {'message': 'Invalid Login', 'action': 'login'})
     else:
-        return render(request, "login.html", {'message': ''})
+        return render(request, "login.html", {'message': '', 'action': 'login'})
 
 
 def logout_view(request):

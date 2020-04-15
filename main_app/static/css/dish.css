@@ -1,0 +1,23 @@
+.general-info {
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+.dietary-restrictions {
+    width: 10vw;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.nutrition-facts {
+    width: 20vw;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ingredients {
+    width: 15vw;
+    display: inline-block;
+    vertical-align: top;
+}

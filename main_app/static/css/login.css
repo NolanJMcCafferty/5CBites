@@ -50,3 +50,8 @@ label {
 #pass {
     -webkit-text-security: disc;
 }
+
+.errorlist {
+    color: red;
+    text-align: left;
+}
