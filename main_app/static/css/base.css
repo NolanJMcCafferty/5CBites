@@ -2,7 +2,7 @@ a:hover {
  cursor:pointer;
 }
 
-.base-nav {
+.navbar {
     margin-bottom: 5vh;
 }
 
@@ -16,4 +16,8 @@ ul {
 
 .rating-date {
     float: right;
+}
+
+#rating-form {
+    padding: 0 1vh;
 }

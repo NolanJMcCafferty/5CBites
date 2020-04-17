@@ -1,6 +1,7 @@
 import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from main_app.forms import CustomUserCreationForm
 from main_app.models import Meal, MenuItem
 
@@ -20,12 +21,10 @@ def sign_up_view(request):
             errors = form.errors
     else:
         form = CustomUserCreationForm()
-    print(errors)
-    return render(request, 'login.html', {'form': form, 'action': 'signup', 'errors': errors})
+    return render(request, 'login.html', {'form': form, 'sign_up': True, 'errors': errors})
 
 
 def login_view(request):
-    print('trying to login')
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -36,21 +35,23 @@ def login_view(request):
             # Redirect to home page
             return redirect('home')
         else:
-            return render(request, "login.html", {'message': 'Invalid Login', 'action': 'login'})
+            return render(request, "login.html", {'message': 'Invalid Login'})
     else:
-        return render(request, "login.html", {'message': '', 'action': 'login'})
+        return render(request, "login.html", {'message': ''})
 
 
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        return redirect('login_view')
+        return redirect('login')
 
 
+@login_required
 def home_view(request):
     return render(request, 'base.html', {})
 
 
+@login_required
 def menus_view(request):
     meal_types = []
     today = datetime.datetime.today()

@@ -27,17 +27,30 @@
 {#    {% endif %}#}
 {#  </header>#}
 {#  <hr>#}
-    <ul class="base-nav nav justify-content-center dark">
-        <li class="nav-item">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mx-auto">
+        <li class="nav-item {% if 'home' in request.path %}active{% endif %}">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item {% if 'menus' in request.path %}active{% endif %}">
             <a class="nav-link" href="{% url 'menus' %}">Menus</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Analytics</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Another Page</a>
-        </li>
     </ul>
+    </div>
+          <ul class="navbar-nav ml-auto">
+            <form class="form-inline my-2 my-lg-0" action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+          </ul>
+    </nav>
     <main>
         {% block content %}
         {% endblock %}

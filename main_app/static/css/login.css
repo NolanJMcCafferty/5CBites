@@ -1,9 +1,9 @@
 .login-container {
-    position: absolute;
-    width: 25%;
-    top: 35%;
+    position: relative;
+    width: 25vw;
+    top: 15vh;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     background: #13232f;
     padding: 2vh;
     text-align: center;

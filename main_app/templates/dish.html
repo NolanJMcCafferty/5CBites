@@ -7,49 +7,71 @@
     <div class="card">
         <div class="card-header"></div>
 
-        <div class="card-body">
-            <ul class="general-info">
-                <li>Name: {{ dish.name }}</li>
-                <li>Dining Hall: {{ dish.dining_hall.name|title }}</li>
-                <li>Forks: {{ average_forks|floatformat:2 }}</li>
-            </ul>
+        <div class="card-body row">
+            <div class="left-container col-md-4">
+                <ul class="general-info">
+                    <li>Name: {{ dish.name }}</li>
+                    <li>Dining Hall: {{ dish.dining_hall.name|title }}</li>
+                    <li>Forks: {{ average_forks|floatformat:2 }}</li>
+                </ul>
 
-            <div class="card nutrition-facts">
-                <div class="card-header">Nutrition Facts</div>
-                <div class="card-body">
-                    <ul>
-                        {% for fact in nutrition_facts%}
-                            <li class="nutrition-fact">
-                                {{ fact.nutrition_fact.name }}: {{ fact.value }}{{ fact.units }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="card">
+                    <div class="card-header">Rate This Dish</div>
+                    <div class="card-body">
+                        <form id="rating-form" method="post">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2" for="forks">Forks:</label>
+                                <input class="form-control col-md-2" type="number" step="0.01" min="0" max="5" id="forks" placeholder="4.7" name="forks">
+                                <button class="btn btn-warning col-md-2 offset-md-5" type="submit">Submit</button>
+                            </div>
+
+                            <div class="form-group row">
+                                <textarea class="form-control col-md-11" rows="4" cols="50" placeholder="Comments..." name="comment"></textarea>
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                    </div>
                 </div>
             </div>
 
-            <div class="card dietary-restrictions">
-                <div class="card-header">Dietary Restrictions</div>
-                <div class="card-body">
-                    <ul>
-                        {% for restriction in dietary_restrictions%}
-                            <li class="dietary-restriction">
-                                {{ restriction.dietary_restriction.name }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+            <div class="right-container col-md-8">
+                 <div class="card nutrition-facts">
+                    <div class="card-header">Nutrition Facts</div>
+                    <div class="card-body">
+                        <ul>
+                            {% for fact in nutrition_facts%}
+                                <li class="nutrition-fact">
+                                    {{ fact.nutrition_fact.name }}: {{ fact.value }}{{ fact.units }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card ingredients">
-                <div class="card-header">Ingredients</div>
-                <div class="card-body">
-                    <ul>
-                        {% for ingredient in ingredients %}
-                            <li class="dietary-restriction">
-                                {{ ingredient.ingredient.name }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="card dietary-restrictions">
+                    <div class="card-header">Dietary Restrictions</div>
+                    <div class="card-body">
+                        <ul>
+                            {% for restriction in dietary_restrictions%}
+                                <li class="dietary-restriction">
+                                    {{ restriction.dietary_restriction.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card ingredients">
+                    <div class="card-header">Ingredients</div>
+                    <div class="card-body">
+                        <ul>
+                            {% for ingredient in ingredients %}
+                                <li class="dietary-restriction">
+                                    {{ ingredient.ingredient.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

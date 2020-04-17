@@ -21,15 +21,15 @@
 
             <ul class="nav nav-pills nav-fill" id="login-nav">
                 <li class="nav-item">
-                    <a href="#login" class="nav-link {% if action != 'signup' %}active{% endif %}" data-toggle="tab">Login</a>
+                    <a href="#login" class="nav-link {% if not sign_up %}active{% endif %}" data-toggle="tab">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#signup" class="nav-link {% if action == 'signup' %}active{% endif %}" data-toggle="tab">Sign Up</a>
+                    <a href="#signup" class="nav-link {% if sign_up %}active{% endif %}" data-toggle="tab">Sign Up</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane fade show {% if action != 'signup' %}active{% endif %}" id="login">
+                <div class="tab-pane fade show {% if not sign_up %}active{% endif %}" id="login">
                      <form class="sit-form" action="{% url 'login' %}" method="post" autocomplete="off">
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 offset-md-1" for="login-username"><i class="fas fa-user"></i></label>
@@ -38,14 +38,14 @@
 
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 offset-md-1" for="login-password"><i class="fas fa-lock"></i></label>
-                            <input class="form-control col-md-6" id="login-password" type="text" placeholder="Password" name="password">
+                            <input class="form-control col-md-6" id="login-password" type="password" placeholder="Password" name="password">
                         </div>
                             {% csrf_token %}
 
                         <input class="btn" type="submit" value="Login">
                   </form>
                 </div>
-                <div class="tab-pane fade show {% if action == 'signup' %}active{% endif %}" id="signup">
+                <div class="tab-pane fade show {% if sign_up %}active{% endif %}" id="signup">
                     <form class="sit-form" action="{% url 'sign_up' %}" method="post" autocomplete="off">
                         <div class="form-group row">
                             <label class="col-form-label col-md-2 offset-md-1" for="signup-username"><i class="fas fa-user"></i></label>
