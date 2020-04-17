@@ -11,7 +11,9 @@
             <div class="left-container col-md-4">
                 <ul class="general-info">
                     <li>Name: {{ dish.name }}</li>
-                    <li>Dining Hall: {{ dish.dining_hall.name|title }}</li>
+                    <li>Dining Hall:
+                        <a href="{% url 'dining_hall' dish.dining_hall.name %}">{{ dish.dining_hall.name|title }}</a>
+                    </li>
                     <li>Forks: {{ average_forks|floatformat:2 }}</li>
                 </ul>
 
@@ -21,7 +23,7 @@
                         <form id="rating-form" method="post">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-2" for="forks">Forks:</label>
-                                <input class="form-control col-md-2" type="number" step="0.01" min="0" max="5" id="forks" placeholder="4.7" name="forks">
+                                <input class="form-control col-md-2" type="number" step="0.1" min="0" max="5" id="forks" placeholder="4.7" name="forks">
                                 <button class="btn btn-warning col-md-2 offset-md-5" type="submit">Submit</button>
                             </div>
 

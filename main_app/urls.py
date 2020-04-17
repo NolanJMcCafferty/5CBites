@@ -10,6 +10,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('home/', home_view, name='home'),
     path('menus/', menus_view, name='menus'),
-    path('dish/', dish_view, name='dish'),
-    path('dining_hall/', dining_hall_view, name='dining_hall'),
+    path('dish/<int:dish_id>/', dish_view, name='dish'),
+    path('dining_hall/<str:name>/', dining_hall_view, name='dining_hall'),
 ]
