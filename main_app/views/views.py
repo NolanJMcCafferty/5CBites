@@ -2,8 +2,9 @@ import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from main_app.forms import CustomUserCreationForm
-from main_app.models import Meal, MenuItem
+from main_app.models import Meal, MenuItem, Rating
 
 
 def sign_up_view(request):
@@ -48,7 +49,31 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-    return render(request, 'base.html', {})
+    response = {
+        'favorites': get_favorite_daily_dishes(request)
+    }
+
+    return render(request, 'home.html', response)
+
+
+def get_favorite_daily_dishes(request):
+    today = datetime.datetime.today()
+
+    todays_favorites = (
+        Rating
+        .objects
+        .filter(
+            user=request.user,
+            dish__menuitem__meal__start_time__date=today,
+        )
+        .annotate(
+            meal_available=F('dish__menuitem__meal__name'),
+        )
+        .distinct()
+        .order_by('-forks')[:10]
+    )
+
+    return todays_favorites
 
 
 @login_required
@@ -118,3 +143,4 @@ def get_menu_items_in_station(meal, station):
             station=station
         )
     )
+
