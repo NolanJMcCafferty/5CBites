@@ -6,7 +6,108 @@
 {% block content %}
     <div class="card">
         <div class="card-header">Advanced Search</div>
-        <div class="card-body">
+        <div class="card-body row">
+            <div class="params-container col-md-4">
+                <div class="card">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <form id="search-form" method="post">
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="dish_name">Dish</label>
+                                <input type="text" class="form-control  col-md-4" name="dish_name" id="dish_name">
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="dining_hall">Dining Hall</label>
+                                <select class="form-control  col-md-5" name="dining_hall" id="dining_hall">
+                                    <option value="any">--------------</option>
+                                    {% for dining_hall in dining_halls %}
+                                        <option value="{{ dining_hall.name }}">{{ dining_hall.name|title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="diet">Diet</label>
+                                <select class="form-control  col-md-4" name="diet" id="diet">
+                                    <option value="any">-----------</option>
+                                    {% for diet in diets %}
+                                        <option value="{{ diet.name }}">{{ diet.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="allergens">Exclude Allergens</label>
+                                <select multiple class="form-control  col-md-3" name="allergens" id="allergens">
+                                    <option selected value="any">-----------</option>
+                                    {% for allergen in allergens %}
+                                        <option value="{{ allergen.name }}">{{ allergen.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="role-select">Role</label>
+                                <select class="form-control  col-md-3" name="role" id="role-select">
+                                    <option value="any">--------</option>
+                                    <option value="student">Student</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="school">School</label>
+                                <select class="form-control col-md-5" name="school" id="school">
+                                    <option value="any">--------------</option>
+                                    <option value="Pomona">Pomona</option>
+                                    <option value="Pitzer">Pitzer</option>
+                                    <option value="Claremont McKenna">Claremont McKenna</option>
+                                    <option value="Harvey Mudd">Harvey Mudd</option>
+                                    <option value="Scripps">Scripps</option>
+                                    <option value="NA">None</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3" for="grad-year-select">Grad Year</label>
+                                <select class="form-control col-md-3" name="grad_year" id="grad-year-select">
+                                    <option value="any">-------</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-warning col-md-2 offset-md-5" type="submit">Submit</button>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 offset-md-1">
+                <div class="card">
+                    <div class="card-header">Most Popular Dishes</div>
+                    <div class="card-body">
+                        {% for result in results %}
+                            <div class="result">
+                                <a href="{% url 'dish' result.id %}">{{ result.name }}</a>
+                                ({{ result.dining_hall_id|title }}): {{ result.avg_rating|floatformat:2 }}
+                            </div>
+                        {% endfor %}
+
+                        {% if not results %}
+                            <div>No dishes found with these search parameters.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

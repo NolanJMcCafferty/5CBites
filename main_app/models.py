@@ -73,7 +73,6 @@ class MenuItem(models.Model):
 
     class Meta:
         managed = True
-        unique_together = (("dish", "meal"),)
         db_table = 'MenuItem'
 
 
