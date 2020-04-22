@@ -19,7 +19,7 @@ class Menu:
 		return self.stations
 
 	def save(self):
-		dining_hall = DiningHall.objects.filter(name=self.dining_hall).first()
+		dining_hall, _ = DiningHall.objects.get_or_create(name=self.dining_hall)
 		self.meal, _ = Meal.objects.get_or_create(
 			name=self.meal_name,
 			dining_hall=dining_hall,
