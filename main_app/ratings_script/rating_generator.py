@@ -18,7 +18,7 @@ class RatingGenerator(ABC):
         self.negative_comments = []
         self.num_forks = None
         self.rating_comment = None
-        self.user = User.objects.filter(username="nolan_mccafferty").first()
+        self.user = User.objects.order_by("?").first()
 
     def generate_ratings(self, max_ratings_per_entry):
         ratings = []
