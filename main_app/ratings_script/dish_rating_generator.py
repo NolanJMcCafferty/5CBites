@@ -6,20 +6,20 @@ from django.utils import timezone
 
 class DishRatingGenerator(RatingGenerator):
 
-    def __init__(self):
-        super().__init__()
-        self.entries = Dish.objects.all()
+    def __init__(self, max_ratings_per_entry):
+        super().__init__(max_ratings_per_entry)
+        self.entries = RatingGenerator.get_mean_ratings_for_entries(Dish.objects.all())
         self.positive_comments = dish_positive_comments
         self.negative_comments = dish_negative_comments
 
-    def generate_rating(self, entry):
-        super().generate_rating(entry)
+    def generate_rating(self, user, entry):
+        super().generate_rating(user, entry)
 
         return Rating(
-            user=self.user,
+            user=user,
             datetime=timezone.now(),
             forks=self.num_forks,
             comment=self.rating_comment,
-            dish=entry,
+            dish=entry['entry'],
             dining_hall=None,
         )
