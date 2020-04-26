@@ -27,15 +27,16 @@
 
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
     <ul class="navbar-nav mx-auto">
         <li class="nav-item {% if 'home' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'home' %}"><h1>Home</h1></a>
         </li>
         <li class="nav-item {% if 'menus' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'menus' %}">Menus</a>
+            <a class="nav-link" href="{% url 'menus' %}"><h1>Menus</h1></a>
         </li>
         <li class="nav-item {% if 'advanced_search' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'advanced_search' %}">Advanced Search</a>
+            <a class="nav-link" href="{% url 'advanced_search' %}"><h1>Advanced Search</h1></a>
         </li>
     </ul>
     </div>

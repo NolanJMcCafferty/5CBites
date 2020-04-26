@@ -32,11 +32,14 @@
 
                         <div class="card-body menu">
                             {% for station in meal.stations %}
-                                <div class="station-name">{{ station.name|title }}</div>
+
+                                    <h5>{{ station.name|title }}</h5>
+
+
 
                                 <ul class="menu-items">
                                     {% for menu_item in station.menu_items %}
-                                        <li class="menu-item"><a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name }}</a></li>
+                                        <li class="menu-item"><a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name}}</a> Find way to put ratings  </li>
                                     {% endfor %}
                                 </ul>
                             {% endfor %}
