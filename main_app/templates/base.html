@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
+
+
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 
@@ -18,22 +20,23 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
     <ul class="navbar-nav mx-auto">
         <li class="nav-item {% if 'home' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" href="{% url 'home' %}"><h1>Home</h1></a>
         </li>
         <li class="nav-item {% if 'menus' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'menus' %}">Menus</a>
+            <a class="nav-link" href="{% url 'menus' %}"><h1>Menus</h1></a>
         </li>
         <li class="nav-item {% if 'advanced_search' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'advanced_search' %}">Advanced Search</a>
+            <a class="nav-link" href="{% url 'advanced_search' %}"><h1>Advanced Search</h1></a>
         </li>
     </ul>
     </div>
