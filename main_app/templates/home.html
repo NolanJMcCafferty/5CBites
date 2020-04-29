@@ -5,20 +5,22 @@
  {% endblock %}
 {% block content %}
     <div class="card bg-info Favourite Dishes">
-        <div class="card-header"> <strong> <h3>Favorite Dishes Available Today </h3></strong> </div>
+        <div class="card-header"><h3>Favorite Dishes Available Today</h3></div>
         <ul class="list-group list-group-flush">
             {% for rating in favorites %}
                 <li class="list-group-item favorite-dish">
-                    <h4> <a href="{% url 'dish' rating.dish.id %}">{{ rating.dish.name }}</a>
+                    <h4><a href="{% url 'dish' rating.dish.id %}">{{ rating.dish.name }}</a>
                         <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
                              xmlns="http://www.w3.org/2000/svg" style=" color: rgb(255,221,26)">
-
                             <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                         </svg>
 
                         {{ rating.forks|floatformat:2 }}
                     </h4>
-                    <h6> {{ rating.dish.dining_hall.name }} {{ rating.meal_available }} </h6>
+                    <h6>
+                        <a href="{% url 'dining_hall' rating.dish.dining_hall.name %}">{{ rating.dish.dining_hall.name|title }}</a>
+                        {{ rating.meal_available }}
+                    </h6>
                 </li>
             {% endfor %}
         </ul>

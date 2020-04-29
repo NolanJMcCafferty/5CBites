@@ -1,3 +1,11 @@
 select {
     text-align-last: center;
 }
+
+.results {
+    padding-top: 3vh;
+}
+
+.results-graph {
+    margin-bottom: 3vh;
+}

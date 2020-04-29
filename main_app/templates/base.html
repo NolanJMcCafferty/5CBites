@@ -30,13 +30,13 @@
 
     <ul class="navbar-nav mx-auto">
         <li class="nav-item {% if 'home' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'home' %}"><h1>Home</h1></a>
+            <a class="nav-link" href="{% url 'home' %}"><h4>Home</h4></a>
         </li>
         <li class="nav-item {% if 'menus' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'menus' %}"><h1>Menus</h1></a>
+            <a class="nav-link" href="{% url 'menus' %}"><h4>Menus</h4></a>
         </li>
         <li class="nav-item {% if 'advanced_search' in request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'advanced_search' %}"><h1>Advanced Search</h1></a>
+            <a class="nav-link" href="{% url 'advanced_search' %}"><h4>Advanced Search</h4></a>
         </li>
     </ul>
     </div>

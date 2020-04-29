@@ -5,3 +5,19 @@
 .station-name {
     font-weight: bold;
 }
+
+.meal-container {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+}
+
+.station {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.menu-items {
+    padding-left: 0;
+    margin-right: 1vw;
+}

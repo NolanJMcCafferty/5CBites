@@ -2,6 +2,7 @@
 {% block style %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/advanced_search.css' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
  {% endblock %}
 {% block content %}
     <div class="card">
@@ -15,7 +16,7 @@
 
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3" for="dish_name">Dish</label>
-                                <input type="text" class="form-control  col-md-4" name="dish_name" id="dish_name">
+                                <input type="text" class="form-control  col-md-4" value="{{ form.dish_name }}" name="dish_name" id="dish_name">
                             </div>
 
                             <div class="form-group row">
@@ -23,7 +24,11 @@
                                 <select class="form-control  col-md-5" name="dining_hall" id="dining_hall">
                                     <option value="any">--------------</option>
                                     {% for dining_hall in dining_halls %}
-                                        <option value="{{ dining_hall.name }}">{{ dining_hall.name|title }}</option>
+                                        <option
+                                                {% if form.dining_hall == dining_hall.name %} selected {% endif %}
+                                                value="{{ dining_hall.name }}">
+                                            {{ dining_hall.name|title }}
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -33,7 +38,10 @@
                                 <select class="form-control  col-md-4" name="diet" id="diet">
                                     <option value="any">-----------</option>
                                     {% for diet in diets %}
-                                        <option value="{{ diet.name }}">{{ diet.name }}</option>
+                                        <option {% if form.diet == diet.name %} selected {% endif %}
+                                                value="{{ diet.name }}">
+                                            {{ diet.name }}
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -41,9 +49,12 @@
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3" for="allergens">Exclude Allergens</label>
                                 <select multiple class="form-control  col-md-3" name="allergens" id="allergens">
-                                    <option selected value="any">-----------</option>
+                                    <option {% if "any" in forms.allergens %}selected{% endif %} value="any">-----------</option>
                                     {% for allergen in allergens %}
-                                        <option value="{{ allergen.name }}">{{ allergen.name }}</option>
+                                        <option {% if allergen.name in form.allergens %}selected{% endif %}
+                                                value="{{ allergen.name }}">
+                                            {{ allergen.name }}
+                                        </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -52,23 +63,25 @@
                                 <label class="col-form-label col-md-3" for="role-select">Role</label>
                                 <select class="form-control  col-md-3" name="role" id="role-select">
                                     <option value="any">--------</option>
-                                    <option value="student">Student</option>
-                                    <option value="faculty">Faculty</option>
-                                    <option value="staff">Staff</option>
-                                    <option value="other">Other</option>
+                                    {% for role in roles %}
+                                        <option {% if role == form.role %}selected{% endif %}
+                                                value="{{ role }}">
+                                            {{ role|title }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3" for="school">School</label>
                                 <select class="form-control col-md-5" name="school" id="school">
-                                    <option value="any">--------------</option>
-                                    <option value="Pomona">Pomona</option>
-                                    <option value="Pitzer">Pitzer</option>
-                                    <option value="Claremont McKenna">Claremont McKenna</option>
-                                    <option value="Harvey Mudd">Harvey Mudd</option>
-                                    <option value="Scripps">Scripps</option>
-                                    <option value="NA">None</option>
+                                    <option value="any">--------</option>
+                                    {% for school in schools %}
+                                        <option {% if school == form.school %}selected{% endif %}
+                                                value="{{ school }}">
+                                            {{ school }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
 
@@ -76,38 +89,48 @@
                                 <label class="col-form-label col-md-3" for="grad-year-select">Grad Year</label>
                                 <select class="form-control col-md-3" name="grad_year" id="grad-year-select">
                                     <option value="any">-------</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
+                                    {% for grad_year in grad_years %}
+                                        <option {% if grad_year|stringformat:"s" == form.grad_year %}selected{% endif %}
+                                                value="{{ grad_year }}">
+                                            {{ grad_year }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
 
                             <button class="btn btn-warning col-md-2 offset-md-5" type="submit">Submit</button>
-                            <a href="{% url 'advanced_search' %}">Click here</a>
                             {% csrf_token %}
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-5 offset-md-1">
-                <div class="card">
-                    <div class="card-header">Most Popular Dishes</div>
-                    <div class="card-body">
-                        {% for result in results %}
-                            <div class="result">
-                                <a href="{% url 'dish' result.id %}">{{result.name }}</a>
-                                ({{ result.dining_hall_id|title }}): {{ result.avg_rating|floatformat:2 }}
-                            </div>
-                        {% endfor %}
-
-                        {% if not results %}
-                            <div>No dishes found with these search parameters.</div>
-                        {% endif %}
+            <div class="results col-md-5 offset-md-1">
+                {% if results %}
+                    <div class="results-graph">
+                        {% autoescape off %}
+                            {{ plot_div }}
+                        {% endautoescape %}
                     </div>
-                </div>
+
+
+                    {% for result in results %}
+                    <li class="list-group-item favorite-dish">
+                        <h4> <a href="{% url 'dish' result.id %}">{{ result.name }}</a>
+                            <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg" style=" color: rgb(255,221,26)">
+                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                            </svg>
+
+                            {{ result.avg_rating|floatformat:2 }}
+                        </h4>
+                        <h6>
+                            <a href="{% url 'dining_hall' result.dining_hall_id %}">{{ result.dining_hall_id|title }}</a></h6>
+                    </li>
+                {% endfor %}
+                {% else %}
+                    <div>No dishes found with these search parameters.</div>
+                {% endif %}
             </div>
 
         </div>

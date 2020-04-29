@@ -24,28 +24,31 @@
                 {% for meal in meal_type.meals %}
                     <div class="card meal-container">
                         <div class="card-header">
-                            <a  href="{% url 'dining_hall' meal.info.dining_hall.name %}" style = "color:blue">
-                               <h3>  <u>{{ meal.info.dining_hall.name|title }}</u> </h3>
-                            </a>
-                            <span class="menu-hours">
-                                <h4>{{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}</h4>
-                            </span>
+                            <h4>
+                                <a  href="{% url 'dining_hall' meal.info.dining_hall.name %}">
+                                   {{ meal.info.dining_hall.name|title }}
+                                </a>
+                                <span class="menu-hours">
+                                    {{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}
+                                </span>
+                            </h4>
+
                         </div>
 
-                        <div class="card-body menu">
-                            {% for station in meal.stations %}
-
-                                    <h5>{{ station.name|title }}</h5>
-
-
-
-                                <ul class="menu-items">
-                                    {% for menu_item in station.menu_items %}
-                                        <li class="menu-item"><a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name}}</a>
-                                        </li>
-                                        {% endfor %}
-                                </ul>
-                            {% endfor %}
+                        <div class="card-body">
+                            <div class="row">
+                                {% for station in meal.stations %}
+                                    <div class="station col-md-4">
+                                        <h5>{{ station.name|title }}</h5>
+                                        <ul class="menu-items">
+                                            {% for menu_item in station.menu_items %}
+                                                <li class="menu-item"><a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name}}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
