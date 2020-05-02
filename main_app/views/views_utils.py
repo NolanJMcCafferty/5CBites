@@ -1,6 +1,7 @@
 import datetime
 from main_app.models import DiningHall, DietaryRestrictions, User, Rating, Dish, NutritionFactsOfDish, \
     DietaryRestrictionsOfDish, IngredientsInDish
+from main_app.views.views_constants import primary_nutrition_facts, nutrition_fact_names
 
 
 def get_dining_halls():
@@ -101,11 +102,43 @@ def save_dining_hall_rating(request, dining_hall):
 
 
 def get_nutrition_facts(dish):
-    return (
+    primary_facts = []
+    secondary_facts = []
+    calories = None
+    serving_size = None
+
+    all_facts = (
         NutritionFactsOfDish
         .objects
         .filter(dish=dish)
     )
+
+    for fact in all_facts:
+
+        if fact.nutrition_fact.name in nutrition_fact_names:
+            fact_name = nutrition_fact_names[fact.nutrition_fact.name]
+        else:
+            fact_name = fact.nutrition_fact.name
+
+        new_fact = {
+            'name': fact_name,
+            'value': str(fact.value) + fact.units,
+        }
+
+        if fact_name == 'calories':
+            calories = new_fact['value']
+        elif fact_name == 'serving size':
+            serving_size = new_fact['value']
+        elif fact_name in primary_nutrition_facts:
+            primary_facts.append(new_fact)
+        else:
+            secondary_facts.append(new_fact)
+
+    return {
+        'calories': calories,
+        'serving_size': serving_size,
+        'facts': zip(primary_facts, secondary_facts)
+    }
 
 
 def get_dietary_restrictions(dish):

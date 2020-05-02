@@ -9,3 +9,7 @@ select {
 .results-graph {
     margin-bottom: 3vh;
 }
+
+.submit-btn {
+    background: dodgerblue;
+}

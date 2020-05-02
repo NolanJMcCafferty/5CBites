@@ -15,12 +15,12 @@
                         <form id="search-form" method="post">
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="dish_name">Dish</label>
-                                <input type="text" class="form-control  col-md-4" value="{{ form.dish_name }}" name="dish_name" id="dish_name">
+                                <label class="col-form-label col-md-4" for="dish_name">Dish</label>
+                                <input type="text" class="form-control  col-md-5" value="{{ form.dish_name }}" name="dish_name" id="dish_name">
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="dining_hall">Dining Hall</label>
+                                <label class="col-form-label col-md-4" for="dining_hall">Dining Hall</label>
                                 <select class="form-control  col-md-5" name="dining_hall" id="dining_hall">
                                     <option value="any">--------------</option>
                                     {% for dining_hall in dining_halls %}
@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="diet">Diet</label>
+                                <label class="col-form-label col-md-4" for="diet">Diet</label>
                                 <select class="form-control  col-md-4" name="diet" id="diet">
                                     <option value="any">-----------</option>
                                     {% for diet in diets %}
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="allergens">Exclude Allergens</label>
+                                <label class="col-form-label col-md-4" for="allergens">Exclude Allergens</label>
                                 <select multiple class="form-control  col-md-3" name="allergens" id="allergens">
                                     <option {% if "any" in forms.allergens %}selected{% endif %} value="any">-----------</option>
                                     {% for allergen in allergens %}
@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="role-select">Role</label>
+                                <label class="col-form-label col-md-4" for="role-select">Role</label>
                                 <select class="form-control  col-md-3" name="role" id="role-select">
                                     <option value="any">--------</option>
                                     {% for role in roles %}
@@ -73,8 +73,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="school">School</label>
-                                <select class="form-control col-md-5" name="school" id="school">
+                                <label class="col-form-label col-md-4" for="school">School</label>
+                                <select class="form-control col-md-6" name="school" id="school">
                                     <option value="any">--------</option>
                                     {% for school in schools %}
                                         <option {% if school == form.school %}selected{% endif %}
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3" for="grad-year-select">Grad Year</label>
+                                <label class="col-form-label col-md-4" for="grad-year-select">Grad Year</label>
                                 <select class="form-control col-md-3" name="grad_year" id="grad-year-select">
                                     <option value="any">-------</option>
                                     {% for grad_year in grad_years %}
@@ -98,14 +98,14 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-warning col-md-2 offset-md-5" type="submit">Submit</button>
+                            <button class="btn submit-btn col-md-3 offset-md-4" type="submit">Submit</button>
                             {% csrf_token %}
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="results col-md-5 offset-md-1">
+            <div class="results col-md-6 offset-md-1">
                 {% if results %}
                     <div class="results-graph">
                         {% autoescape off %}

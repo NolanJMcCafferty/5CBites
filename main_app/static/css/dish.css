@@ -4,7 +4,6 @@
 }
 
 .dietary-restrictions {
-    width: 10vw;
     display: inline-block;
     vertical-align: top;
 }
@@ -14,13 +13,11 @@
 }
 
 .nutrition-facts {
-    width: 15vw;
     display: inline-block;
     vertical-align: top;
 }
 
 .ingredients {
-    width: 15vw;
     display: inline-block;
     vertical-align: top;
 }
@@ -31,4 +28,8 @@
 
 .nf-value {
     text-align: right;
+}
+
+table {
+    display: inline-block;
 }

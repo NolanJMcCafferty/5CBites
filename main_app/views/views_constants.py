@@ -6,3 +6,24 @@ ratings_order_dict = {
     'best': '-forks',
     'worst': 'forks',
 }
+
+nutrition_fact_names = {
+    'saturatedFat': 'saturated fat',
+    'transFat': 'trans fat',
+    'dietaryFiber': 'dietary fiber',
+    'vitaminA': 'vitamin a',
+    'vitaminC': 'vitamin c',
+    'portionSize': 'serving size',
+}
+
+primary_nutrition_facts = {
+    'fat',
+    'saturated fat',
+    'trans fat',
+    'cholesterol',
+    'sodium',
+    'dietary fiber',
+    'sugar',
+    'protein',
+}
+

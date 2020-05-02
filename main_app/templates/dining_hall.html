@@ -13,32 +13,32 @@
                     <h3>Average Rating: <span class="fa fa-star"></span> {{ average_forks|floatformat:2 }}</h3></li>
             </ul>
 
-            <div class="card">
-                <div class="card-header bg-success"><h4>Rate This Dining Hall</h4></div>
-                <div class="card-body">
-                    <form id="rating-form" method="post">
-                         <div class="form-group-row">
-                            <div class="offset-md-4">
-                                <span class="fa fa-star"></span>
-                                <output id="amount" name="amount" for="rangeInput">2.5</output>
+            <div class="offset-md-4">
+                <div class="card">
+                    <div class="card-header"><h4>Rate This Dining Hall</h4></div>
+                    <div class="card-body">
+                        <form id="rating-form" method="post">
+                             <div class="form-group-row">
+                                <div class="offset-md-4">
+                                    <span class="fa fa-star"></span>
+                                    <output id="amount" name="amount" for="rangeInput">2.5</output>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-form-label" for="forks">Rating:</label>
-                            <input type="range" class="offset-md-1 col-md-5" id="rangeInput" name="forks" min="0" max="5" step="0.1" value="2.5" oninput="amount.value=rangeInput.value">
-                            <button class="btn btn-secondary offset-md-2" type="submit">Submit</button>
-                        </div>
+                            <div class="form-group row">
+                                <label class="col-form-label" for="forks">Rating:</label>
+                                <input type="range" class="offset-md-1 col-md-5" id="rangeInput" name="forks" min="0" max="5" step="0.1" value="2.5" oninput="amount.value=rangeInput.value">
+                                <button class="btn btn-secondary offset-md-2" type="submit">Submit</button>
+                            </div>
 
-                        <div class="form-group row">
-                            <textarea class="form-control col-md-11" rows="4" cols="50" placeholder="Comments..." name="comment"></textarea>
-                        </div>
+                            <div class="form-group row">
+                                <textarea class="form-control col-md-11" rows="4" cols="50" placeholder="Comments..." name="comment"></textarea>
+                            </div>
 
-                        {% csrf_token %}
-                    </form>
+                            {% csrf_token %}
+                        </form>
+                    </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 

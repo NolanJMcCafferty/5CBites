@@ -3,7 +3,13 @@ a:hover {
 }
 
 .navbar {
-    margin-bottom: 5vh;
+    margin-bottom: 3vh;
+}
+
+#logout-btn {
+    background: None;
+    border: 1px solid dodgerblue;
+    color: dodgerblue;
 }
 
 .card {

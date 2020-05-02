@@ -20,7 +20,7 @@
                     </h3>
                 </ul>
 
-                <div class="card ">
+                <div class="card">
                     <div class="card-header"><h4>Rate This Dish</h4></div>
                     <div class="card-body">
                         <form id="rating-form" method="post">
@@ -46,19 +46,32 @@
                 </div>
             </div>
 
-            <div class="right-container col-md-8">
-                 <div class="card nutrition-facts">
+            <div class="col-md-4">
+                <div class="card nutrition-facts">
                     <div class="card-header"><h4> Nutrition Facts</h4></div>
                      <div class="card-body">
                          <table class="table">
                             <tbody>
-                                {% for fact in nutrition_facts %}
+                                <tr>
+                                    <td class="nf-label">Calories</td>
+                                    <td>{{ nutrition_facts.calories }}</td>
+
+                                    <td class="nf-label">Serving Size</td>
+                                    <td>{{ nutrition_facts.serving_size }}</td>
+                                </tr>
+                                {% for fact in nutrition_facts.facts %}
                                     <tr>
                                         <td class="nf-label">
-                                            {{ fact.nutrition_fact.name }}
+                                            {{ fact.0.name|title }}
                                         </td>
                                         <td class="nf-value">
-                                            {{ fact.value }}{{ fact.units }}
+                                            {{ fact.0.value }}
+                                        </td>
+                                        <td class="nf-label">
+                                            {{ fact.1.name|title }}
+                                        </td>
+                                        <td class="nf-value">
+                                            {{ fact.1.value }}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -66,8 +79,9 @@
                         </table>
                      </div>
                  </div>
+            </div>
 
-
+            <div class="offset-md-1 col-md-3">
                 <div class="card dietary-restrictions">
                     <div class="card-header"><h4>Dietary Restrictions</h4></div>
                     <ul class="list-group list-group-flush">
@@ -78,20 +92,24 @@
                         {% endfor %}
                     </ul>
                 </div>
+            </div>
 
-                <div class="card ingredients">
-                    <div class="card-header"><h4>Ingredients</h4></div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            {% for ingredient in ingredients %}
-                                <li class="list-group-item ingredients">
-                                    {{ ingredient.ingredient.name }}
-                                </li>
-                            {% endfor %}
-                        </ul>
+            {% if ingredients.length %}
+                <div class="col-md-1">
+                     <div class="card ingredients">
+                        <div class="card-header"><h4>Ingredients</h4></div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                {% for ingredient in ingredients %}
+                                    <li class="list-group-item ingredients">
+                                        {{ ingredient.ingredient.name }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 
