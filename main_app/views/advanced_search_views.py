@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 from main_app.models import Dish, Rating
 from django.db.models import Avg
 from main_app.views.views_utils import get_dining_halls, get_diets, get_allergens, get_roles, get_schools, \
-    get_grad_years
+    get_grad_years, save_dish_rating, get_dish
 from main_app.views.views_constants import num_results
 
 
@@ -32,20 +32,23 @@ def get_search_results(request):
     results = Dish.objects.all()
 
     if request.method == "POST":
-        if request.POST['dining_hall'] != 'any':
-            results = results.filter(dining_hall=request.POST['dining_hall'])
+        if request.POST.get('rating'):
+            save_dish_rating(request, get_dish(request.POST.get('dish')))
+        else:
+            if request.POST['dining_hall'] != 'any':
+                results = results.filter(dining_hall=request.POST['dining_hall'])
 
-        if request.POST['dish_name']:
-            results = results.filter(name=request.POST['dish_name'])
+            if request.POST['dish_name']:
+                results = results.filter(name=request.POST['dish_name'])
 
-        if request.POST['diet'] != 'any':
-            results = results.filter(dietaryrestrictionsofdish__dietary_restriction__name=request.POST['diet'])
+            if request.POST['diet'] != 'any':
+                results = results.filter(dietaryrestrictionsofdish__dietary_restriction__name=request.POST['diet'])
 
-        if request.POST.getlist('allergens') != ['any']:
+            if request.POST.getlist('allergens') != ['any']:
 
-            results = results.exclude(
-                dietaryrestrictionsofdish__dietary_restriction__name__in=request.POST.getlist('allergens')
-            )
+                results = results.exclude(
+                    dietaryrestrictionsofdish__dietary_restriction__name__in=request.POST.getlist('allergens')
+                )
 
     return pd.DataFrame(results.values())
 
@@ -73,7 +76,7 @@ def get_most_popular_results(request):
 def get_avg_dish_ratings(request):
     avg_ratings = Rating.objects.filter(dish__isnull=False)
 
-    if request.method == "POST":
+    if request.method == "POST" and not request.POST.get('rating'):
 
         if request.POST['role'] != 'any':
             avg_ratings = avg_ratings.filter(user__role=request.POST['role'])
@@ -101,8 +104,8 @@ def get_plot(results):
             text=[round(dish['avg_rating'], 2) for dish in reversed(results)],
             textposition='auto',
             marker=dict(
-                color='rgba(246, 78, 139, 0.6)',
-                line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
+                color='#7ABDFF',
+                line=dict(color='dodgerblue', width=3)
             ),
             orientation='h',
     )]

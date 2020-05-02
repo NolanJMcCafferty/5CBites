@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from main_app.forms import CustomUserCreationForm
 from main_app.models import Meal, MenuItem, Rating
+from main_app.views.views_utils import save_dining_hall_rating, save_dish_rating, get_dish, get_dining_hall
 
 
 def sign_up_view(request):
@@ -31,8 +32,10 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
+
             # Redirect to home page
             return redirect('home')
         else:
@@ -49,6 +52,12 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
+    if request.method == "POST":
+        if request.POST.get('dish'):
+            save_dish_rating(request, get_dish(request.POST.get('dish')))
+        else:
+            save_dining_hall_rating(request, get_dining_hall(request.POST.get('dining_hall')))
+
     response = {
         'favorites': get_favorite_daily_dishes(request)
     }
@@ -80,6 +89,12 @@ def get_favorite_daily_dishes(request):
 def menus_view(request):
     meal_types = []
     today = datetime.datetime.today()
+
+    if request.method == "POST":
+        if request.POST.get('dish'):
+            save_dish_rating(request, get_dish(request.POST.get('dish')))
+        else:
+            save_dining_hall_rating(request, get_dining_hall(request.POST.get('dining_hall')))
 
     for meal_type in get_meal_types_today():
         meals = []

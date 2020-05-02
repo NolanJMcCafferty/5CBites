@@ -1,0 +1,28 @@
+<span class="fa fa-edit" data-toggle="popover" data-html='true' data-content='
+    <form id="rating-form" method="post">
+        {% if type == 'dish' %}
+            <input type="hidden" name="dish" value="{{ dish_id }}"/>
+        {% else %}
+              <input type="hidden" name="dining_hall" value="{{ dining_hall }}"/>
+        {% endif %}
+        <input type="hidden" name="rating" value="true"/>
+
+         <div class="form-group-row">
+            <div class="offset-md-6">
+                <span class="fa fa-star"></span>
+                <output id="amount" name="amount" for="rangeInput">2.5</output>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-md-4" for="forks">Rating:</label>
+            <input type="range" id="rangeInput" name="forks" min="0" max="5" step="0.1" value="2.5" oninput="amount.value=rangeInput.value">
+        </div>
+
+        <div class="form-group row">
+            <textarea class="form-control offset-md-1 col-md-10" rows="4" cols="50" placeholder="Comments..." name="comment"></textarea>
+        </div>
+
+        <button class="btn btn-secondary col-md-4 offset-md-4" type="submit">Submit</button>
+        {% csrf_token %}
+    </form>'>
+</span>

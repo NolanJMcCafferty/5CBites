@@ -28,6 +28,7 @@
                                 <a  href="{% url 'dining_hall' meal.info.dining_hall.name %}">
                                    {{ meal.info.dining_hall.name|title }}
                                 </a>
+                                {% include 'rating_popup.html' with type='dh' dining_hall=meal.info.dining_hall.name %}
                                 <span class="menu-hours">
                                     {{ meal.info.start_time|date:'g:i' }}-{{ meal.info.end_time|date:'g:i' }}
                                 </span>
@@ -42,7 +43,9 @@
                                         <h5>{{ station.name|title }}</h5>
                                         <ul class="menu-items">
                                             {% for menu_item in station.menu_items %}
-                                                <li class="menu-item"><a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name}}</a>
+                                                <li class="menu-item">
+                                                    <a href="{% url 'dish' menu_item.dish.id %}">{{ menu_item.dish.name}}</a>
+                                                    {% include 'rating_popup.html' with type='dish' dish_id=menu_item.dish.id %}
                                                 </li>
                                             {% endfor %}
                                         </ul>

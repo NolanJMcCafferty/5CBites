@@ -9,8 +9,12 @@
     vertical-align: top;
 }
 
+.dietary-restriction {
+    text-align: center;
+}
+
 .nutrition-facts {
-    width: 20vw;
+    width: 15vw;
     display: inline-block;
     vertical-align: top;
 }
@@ -19,4 +23,12 @@
     width: 15vw;
     display: inline-block;
     vertical-align: top;
+}
+
+.nf-label {
+    font-weight: bold;
+}
+
+.nf-value {
+    text-align: right;
 }

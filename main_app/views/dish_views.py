@@ -1,38 +1,41 @@
-import datetime
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
-from main_app.models import Dish, Rating, NutritionFactsOfDish, DietaryRestrictionsOfDish, \
-    IngredientsInDish
+from main_app.models import Rating
+from main_app.views.views_constants import ratings_per_page, ratings_order_dict
+from main_app.views.views_utils import save_dish_rating, get_dish, get_nutrition_facts, get_dietary_restrictions, \
+    get_ingredients
 
 
 @login_required
 def dish_view(request, dish_id):
-    dish = Dish.objects.filter(id=dish_id).first()
+    dish = get_dish(dish_id)
 
     if request.method == 'POST':
         save_dish_rating(request, dish)
 
-    ratings = Rating.objects.filter(dish=dish).order_by('-datetime')
+    rating_order = request.GET.get('ratings_order', 'recent')
+
+    ratings = (
+        Rating
+        .objects
+        .filter(dish=dish)
+        .order_by(ratings_order_dict[rating_order])
+    )
+
+    ratings_paginator = Paginator(ratings, ratings_per_page)
+    ratings_page_number = request.GET.get('page', 1)
 
     response = {
         'dish': dish,
-        'ratings': ratings,
+        'rating_order': rating_order,
+        'rating_orders': ratings_order_dict,
+        'ratings_page': ratings_paginator.get_page(ratings_page_number),
         'average_forks': ratings.aggregate(avg=Avg('forks'))['avg'],
-        'nutrition_facts': NutritionFactsOfDish.objects.filter(dish=dish),
-        'dietary_restrictions': DietaryRestrictionsOfDish.objects.filter(dish=dish),
-        'ingredients': IngredientsInDish.objects.filter(dish=dish),
+        'nutrition_facts': get_nutrition_facts(dish),
+        'dietary_restrictions': get_dietary_restrictions(dish),
+        'ingredients': get_ingredients(dish),
     }
 
     return render(request, 'dish.html', response)
-
-
-def save_dish_rating(request, dish):
-    Rating.objects.create(
-        user=request.user,
-        forks=request.POST['forks'],
-        comment=request.POST['comment'],
-        datetime=datetime.datetime.now(),
-        dish=dish,
-        dining_hall=None,
-    )

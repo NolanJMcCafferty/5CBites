@@ -21,3 +21,24 @@ ul {
 #rating-form {
     padding: 0 1vh;
 }
+
+.ratings-order {
+    float: right;
+}
+
+.ratings-header {
+    float: left;
+}
+
+.fa-edit:hover {
+    cursor: pointer;
+}
+
+.fa-star {
+    color: gold;
+}
+
+.popover-button {
+    background: dimgray;
+    border-radius: 1px;
+}
