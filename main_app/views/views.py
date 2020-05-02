@@ -66,7 +66,7 @@ def home_view(request):
 
 
 def get_favorite_daily_dishes(request):
-    today = datetime.datetime.today()
+    today = datetime.datetime.today() - datetime.timedelta(days=1)
 
     todays_favorites = (
         Rating
@@ -88,7 +88,7 @@ def get_favorite_daily_dishes(request):
 @login_required
 def menus_view(request):
     meal_types = []
-    today = datetime.datetime.today()
+    today = datetime.datetime.today() - datetime.timedelta(days=1)
 
     if request.method == "POST":
         if request.POST.get('dish'):
@@ -127,7 +127,7 @@ def menus_view(request):
 
 
 def get_meal_types_today():
-    today = datetime.datetime.today()
+    today = datetime.datetime.today() - datetime.timedelta(days=1)
 
     return (
         Meal

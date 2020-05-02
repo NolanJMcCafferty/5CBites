@@ -104,8 +104,8 @@ def get_plot(results):
             text=[round(dish['avg_rating'], 2) for dish in reversed(results)],
             textposition='auto',
             marker=dict(
-                color='#7ABDFF',
-                line=dict(color='dodgerblue', width=3)
+                color='#1DDBB7',
+                line=dict(color='#18BC9C', width=3)
             ),
             orientation='h',
     )]

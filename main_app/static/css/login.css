@@ -1,30 +1,35 @@
 body {
-    background-color: #2E2E2E;
+    background-color: #18BC9C;
 }
 
 .login-container {
     position: relative;
-    width: 25vw;
+    width: 30vw;
     top: 15vh;
     left: 50%;
     transform: translate(-50%, 0);
-    background: white;
     padding: 2vh;
     text-align: center;
+    border-radius: 10px;
     box-shadow: 0 0 8px 5px rgba(0, 0, 0, .4);
 }
 
-.nav-pills > li > a {
-    border-radius: 0 !important;
+.login-pill > a {
+    border-radius: 10px 0 0 10px !important;
+}
+
+.sign-up-pill > a {
+    border-radius: 0 10px 10px 0 !important;
 }
 
 .nav-pills > li > a.active {
-    background-color: dodgerblue !important;
+    background-color: #18BC9C !important;
     color: white !important;
 }
 
 .nav-pills > li > a {
-    border: solid dodgerblue 1px;
+    border: solid #18BC9C 1px;
+    background-color: white;
 }
 
 form {
@@ -33,23 +38,23 @@ form {
 
 .textbox i{
     width: 26px;
-    color: dodgerblue;
+    color: #18BC9C;
 }
 
 label {
-    color: dodgerblue;
+    color: #18BC9C;
     transform: translate(10%, 0);
 }
 
 .btn {
-    width: 40%;
-    background: dodgerblue;
+    width: 30%;
     padding: 5px;
-    color: white;
+    border-radius: 10px;
 }
 .message {
     left: 60vh;
     margin-top: 1vh;
+    color: white;
 }
 
 #pass {
@@ -57,6 +62,6 @@ label {
 }
 
 .errorlist {
-    color: red;
+    color: white;
     text-align: left;
 }

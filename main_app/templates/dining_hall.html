@@ -5,13 +5,18 @@
  {% endblock %}
 {% block content %}
     <div class="card">
-        <div class="card-header"></div>
+        <div class="card-header"><h3>{{ dining_hall.name|title }}</h3></div>
         <div class="card-body row">
-            <ul class="general-info">
-                <li><h1>{{ dining_hall.name|title }}</h1></li>
-                <li>
-                    <h3>Average Rating: <span class="fa fa-star"></span> {{ average_forks|floatformat:2 }}</h3></li>
-            </ul>
+            <table class="general-info">
+                <tr>
+                    <td class="info-label"><h4>Average Rating:</h4></td>
+                    <td class="info-value"><h4><span class="fa fa-star"></span> {{ average_forks|floatformat:2 }}</h4></td>
+                </tr>
+                <tr>
+                    <td class="info-label"><h4>Campus: </h4></td>
+                    <td class="info-value"><h4>{{ dining_hall.school|title }}</h4></td>
+                </tr>
+            </table>
 
             <div class="offset-md-4">
                 <div class="card">
@@ -27,7 +32,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label" for="forks">Rating:</label>
                                 <input type="range" class="offset-md-1 col-md-5" id="rangeInput" name="forks" min="0" max="5" step="0.1" value="2.5" oninput="amount.value=rangeInput.value">
-                                <button class="btn btn-secondary offset-md-2" type="submit">Submit</button>
+                                <button class="btn btn-success offset-md-1" type="submit">Submit</button>
                             </div>
 
                             <div class="form-group row">
@@ -42,20 +47,19 @@
         </div>
     </div>
 
-
-   <div class="card">
-    <div class="card-header">
-        <h3 class="ratings-header">Ratings</h3>
-        <nav class="ratings-order">
-            <ul class="pagination">
-                {% for order in rating_orders %}
-                    <li class="page-item {% if order == rating_order %}active{% endif %}">
-                        <a href="?ratings_order={{ order }}" class="page-link">{{ order|title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </nav>
-    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="ratings-header">Ratings</h3>
+            <nav class="ratings-order">
+                <ul class="pagination">
+                    {% for order in rating_orders %}
+                        <li class="page-item {% if order == rating_order %}active{% endif %}">
+                            <a href="?ratings_order={{ order }}" class="page-link">{{ order|title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
         <div class="card-body">
             {% for rating in ratings_page %}
                 <div class="card">

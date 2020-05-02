@@ -2,6 +2,25 @@
     float: right;
 }
 
+.nav-tabs {
+    border-color: #2C3E50 !important;
+}
+
+.tab > a {
+    color: #2C3E50;
+    background: None !important;
+}
+
+.nav-link.active {
+    border-color: #2C3E50 !important;
+    border-bottom: #18BC9C solid !important;
+}
+
+.nav-link:hover {
+    border-color: #2C3E50 !important;
+    border-bottom: #18BC9C solid !important;
+}
+
 .station-name {
     font-weight: bold;
 }

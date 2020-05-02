@@ -5,20 +5,22 @@
  {% endblock %}
 {% block content %}
     <div class="card">
-        <div class="card-header"></div>
+        <div class="card-header"><h3>{{ dish.name|title }}</h3></div>
 
         <div class="card-body row">
             <div class="left-container col-md-4">
-                <ul class="general-info ">
-                    <li><h1>{{ dish.name }}</h1></li>
-                    <h3><li>Dining Hall:
-                        <a href="{% url 'dining_hall' dish.dining_hall.name %}">{{ dish.dining_hall.name|title }}</a>
-                        </li>
-                        <li>  Average Rating: <span class="fa fa-star"></span>
-                        {{ average_forks|floatformat:2 }}
-                        </li>
-                    </h3>
-                </ul>
+                <table class="general-info">
+                    <tr>
+                        <td class="info-label"><h4>Average Rating:</h4></td>
+                        <td class="info-value"><h4><span class="fa fa-star"></span> {{ average_forks|floatformat:2 }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td class="info-label"><h4>Dining Hall:</h4></td>
+                        <td class="info-value"><h4>
+                            <a href="{% url 'dining_hall' dish.dining_hall.name %}">{{ dish.dining_hall.name|title }}</a>
+                        </h4></td>
+                    </tr>
+                </table>
 
                 <div class="card">
                     <div class="card-header"><h4>Rate This Dish</h4></div>
@@ -33,7 +35,7 @@
                             <div class="form-group row">
                                 <label class="col-form-label" for="forks">Rating:</label>
                                 <input type="range" class="offset-md-1 col-md-5" id="rangeInput" name="forks" min="0" max="5" step="0.1" value="2.5" oninput="amount.value=rangeInput.value">
-                                <button class="btn btn-secondary offset-md-2" type="submit">Submit</button>
+                                <button class="btn btn-success offset-md-1" type="submit">Submit</button>
                             </div>
 
                             <div class="form-group row">
@@ -113,7 +115,7 @@
         </div>
     </div>
 
-    <div class="card ">
+    <div class="card">
         <div class="card-header">
             <h3 class="ratings-header">Ratings</h3>
             <nav class="ratings-order">
@@ -130,7 +132,7 @@
             {% for rating in ratings_page %}
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ rating.user.username }}: {{ rating.forks|floatformat:2 }}
+                        <h4>{{ rating.user.username }} {{ rating.forks|floatformat:2 }}
                             <span class="fa fa-star"></span>
                         <span class="rating-date">{{ rating.datetime|date:'n-j-Y' }}</span>
                         </h4>

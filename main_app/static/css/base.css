@@ -2,18 +2,23 @@ a:hover {
  cursor:pointer;
 }
 
+body {
+    background-color: #18BC9C;
+}
+
+
 .navbar {
     margin-bottom: 3vh;
 }
 
-#logout-btn {
-    background: None;
-    border: 1px solid dodgerblue;
-    color: dodgerblue;
-}
-
 .card {
     margin: 2vh 2vw;
+    border-color: #2C3E50;
+}
+
+.card-header {
+    background-color: #2C3E50;
+    color: white;
 }
 
 ul {

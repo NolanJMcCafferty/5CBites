@@ -4,10 +4,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/menus.css' %}">
  {% endblock %}
 {% block content %}
-
+    
+    {% if meal_types %}
     <ul class="nav nav-tabs justify-content-center">
         {% for meal in meal_types %}
-            <li class="nav-item">
+            <li class="nav-item tab">
                 <a
                         class="nav-link {% if forloop.counter == 1 %}active{% endif %}"
                         href="#{{ meal.name }}"
@@ -58,4 +59,7 @@
             </div>
         {% endfor %}
     </div>
+    {% else %}
+        <div class="no-menus offset-md-5">No menus available today.</div>
+    {% endif %}
 {% endblock %}

@@ -6,11 +6,10 @@
  {% endblock %}
 {% block content %}
     <div class="card">
-        <div class="card-header">Advanced Search</div>
+        <div class="card-header bg-primary text-light"><h4>Advanced Search</h4></div>
         <div class="card-body row">
             <div class="params-container col-md-4">
                 <div class="card">
-                    <div class="card-header"></div>
                     <div class="card-body">
                         <form id="search-form" method="post">
 
@@ -98,7 +97,7 @@
                                 </select>
                             </div>
 
-                            <button class="btn submit-btn col-md-3 offset-md-4" type="submit">Submit</button>
+                            <button class="btn btn-success col-md-3 offset-md-4" type="submit">Submit</button>
                             {% csrf_token %}
                         </form>
                     </div>

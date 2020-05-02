@@ -1,6 +1,14 @@
+.info-label {
+    font-weight: bold;
+}
+
+.info-value {
+    padding-left: 2vw;
+}
+
 .general-info {
-    display: inline-block;
-    vertical-align: top;
+    margin-left: 2vw;
+    margin-bottom: 6vh;
 }
 
 .dietary-restrictions {
