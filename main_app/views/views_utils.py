@@ -1,7 +1,7 @@
 import datetime
 from main_app.models import DiningHall, DietaryRestrictions, User, Rating, Dish, NutritionFactsOfDish, \
-    DietaryRestrictionsOfDish, IngredientsInDish
-from main_app.views.views_constants import primary_nutrition_facts, nutrition_fact_names
+    DietaryRestrictionsOfDish, IngredientsInDish, NutritionFacts
+from main_app.views.views_constants import primary_nutrition_facts, nutrition_fact_names, dates_list
 
 
 def get_dining_halls():
@@ -27,6 +27,14 @@ def get_allergens():
         DietaryRestrictions
         .objects
         .exclude(name__startswith='is')
+        .distinct()
+    )
+
+
+def get_all_nutrition_facts():
+    return (
+        NutritionFacts
+        .objects
         .distinct()
     )
 
@@ -155,3 +163,7 @@ def get_ingredients(dish):
         .objects
         .filter(dish=dish)
     )
+
+
+def get_dates():
+    return dates_list

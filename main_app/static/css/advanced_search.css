@@ -9,3 +9,7 @@ select {
 .results-graph {
     margin-bottom: 3vh;
 }
+
+.search-params {
+    margin-left: 0;
+}

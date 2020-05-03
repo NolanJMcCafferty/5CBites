@@ -8,103 +8,127 @@
     <div class="card">
         <div class="card-header bg-primary text-light"><h4>Advanced Search</h4></div>
         <div class="card-body row">
-            <div class="params-container col-md-4">
-                <div class="card">
+            <div class="params-container col-md-6">
+                <div class="card search-params">
                     <div class="card-body">
-                        <form id="search-form" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form id="search-form" method="post">
+                                    <div class="offset-md-4"><h5>Dish Filters</h5></div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-6" for="dish_name">Dish</label>
+                                        <input type="text" class="form-control  col-md-6" value="{{ form.dish_name }}" name="dish_name" id="dish_name">
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="dish_name">Dish</label>
-                                <input type="text" class="form-control  col-md-5" value="{{ form.dish_name }}" name="dish_name" id="dish_name">
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-6" for="dining_hall">Dining Hall</label>
+                                        <select class="form-control  col-md-6" name="dining_hall" id="dining_hall">
+                                            <option value="any">-----------</option>
+                                            {% for dining_hall in dining_halls %}
+                                                <option
+                                                        {% if form.dining_hall == dining_hall.name %} selected {% endif %}
+                                                        value="{{ dining_hall.name }}">
+                                                    {{ dining_hall.name|title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="dining_hall">Dining Hall</label>
-                                <select class="form-control  col-md-5" name="dining_hall" id="dining_hall">
-                                    <option value="any">--------------</option>
-                                    {% for dining_hall in dining_halls %}
-                                        <option
-                                                {% if form.dining_hall == dining_hall.name %} selected {% endif %}
-                                                value="{{ dining_hall.name }}">
-                                            {{ dining_hall.name|title }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-6" for="ingredient">Ingredient</label>
+                                        <input type="text" class="form-control  col-md-6" value="{{ form.ingredient }}" name="ingredient" id="ingredient">
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="diet">Diet</label>
-                                <select class="form-control  col-md-4" name="diet" id="diet">
-                                    <option value="any">-----------</option>
-                                    {% for diet in diets %}
-                                        <option {% if form.diet == diet.name %} selected {% endif %}
-                                                value="{{ diet.name }}">
-                                            {{ diet.name }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-6" for="diet">Diet</label>
+                                        <select class="form-control  col-md-6" name="diet" id="diet">
+                                            <option value="any">-----------</option>
+                                            {% for diet in diets %}
+                                                <option {% if form.diet == diet.name %} selected {% endif %}
+                                                        value="{{ diet.name }}">
+                                                    {{ diet.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="allergens">Exclude Allergens</label>
-                                <select multiple class="form-control  col-md-3" name="allergens" id="allergens">
-                                    <option {% if "any" in forms.allergens %}selected{% endif %} value="any">-----------</option>
-                                    {% for allergen in allergens %}
-                                        <option {% if allergen.name in form.allergens %}selected{% endif %}
-                                                value="{{ allergen.name }}">
-                                            {{ allergen.name }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-6" for="allergens">Exclude Allergens</label>
+                                        <select multiple class="form-control  col-md-6" name="allergens" id="allergens">
+                                            <option {% if "any" in forms.allergens %}selected{% endif %} value="any">-----------</option>
+                                            {% for allergen in allergens %}
+                                                <option {% if allergen.name in form.allergens %}selected{% endif %}
+                                                        value="{{ allergen.name }}">
+                                                    {{ allergen.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="role-select">Role</label>
-                                <select class="form-control  col-md-3" name="role" id="role-select">
-                                    <option value="any">--------</option>
-                                    {% for role in roles %}
-                                        <option {% if role == form.role %}selected{% endif %}
-                                                value="{{ role }}">
-                                            {{ role|title }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                <div class="col-md-6">
+                                    <div class="offset-md-3"><h5>Rating Filters</h5></div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-4" for="role-select">Role</label>
+                                        <select class="form-control  col-md-4" name="role" id="role-select">
+                                            <option value="any">--------</option>
+                                            {% for role in roles %}
+                                                <option {% if role == form.role %}selected{% endif %}
+                                                        value="{{ role }}">
+                                                    {{ role|title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="school">School</label>
-                                <select class="form-control col-md-6" name="school" id="school">
-                                    <option value="any">--------</option>
-                                    {% for school in schools %}
-                                        <option {% if school == form.school %}selected{% endif %}
-                                                value="{{ school }}">
-                                            {{ school }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-4" for="school">School</label>
+                                        <select class="form-control col-md-7" name="school" id="school">
+                                            <option value="any">---------------</option>
+                                            {% for school in schools %}
+                                                <option {% if school == form.school %}selected{% endif %}
+                                                        value="{{ school }}">
+                                                    {{ school }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                            <div class="form-group row">
-                                <label class="col-form-label col-md-4" for="grad-year-select">Grad Year</label>
-                                <select class="form-control col-md-3" name="grad_year" id="grad-year-select">
-                                    <option value="any">-------</option>
-                                    {% for grad_year in grad_years %}
-                                        <option {% if grad_year|stringformat:"s" == form.grad_year %}selected{% endif %}
-                                                value="{{ grad_year }}">
-                                            {{ grad_year }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-4" for="grad-year-select">Grad Year</label>
+                                        <select class="form-control col-md-3" name="grad_year" id="grad-year-select">
+                                            <option value="any">-------</option>
+                                            {% for grad_year in grad_years %}
+                                                <option {% if grad_year|stringformat:"s" == form.grad_year %}selected{% endif %}
+                                                        value="{{ grad_year }}">
+                                                    {{ grad_year }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-4" for="date">Date In The Last</label>
+                                        <select class="form-control col-md-4" name="date" id="date">
+                                            <option value="any">--------</option>
+                                            {% for date in date_options %}
+                                                <option {% if date.1 == form.date %}selected{% endif %}
+                                                        value="{{ date.1 }}">
+                                                    {{ date.0|title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
 
-                            <button class="btn btn-success col-md-3 offset-md-4" type="submit">Submit</button>
-                            {% csrf_token %}
-                        </form>
+                                <button class="btn btn-success col-md-3 offset-md-4" type="submit">Submit</button>
+                                {% csrf_token %}
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="results col-md-6 offset-md-1">
+            <div class="results col-md-6">
                 {% if results %}
                     <div class="results-graph">
                         {% autoescape off %}

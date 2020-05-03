@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 from django.shortcuts import render
 from plotly.offline import plot
 import plotly.graph_objects as go
@@ -6,7 +7,7 @@ import plotly.graph_objects as go
 from main_app.models import Dish, Rating
 from django.db.models import Avg
 from main_app.views.views_utils import get_dining_halls, get_diets, get_allergens, get_roles, get_schools, \
-    get_grad_years, save_dish_rating, get_dish
+    get_grad_years, save_dish_rating, get_dish, get_dates, get_all_nutrition_facts
 from main_app.views.views_constants import num_results
 
 
@@ -18,9 +19,11 @@ def advanced_search_view(request):
         'dining_halls': get_dining_halls(),
         'diets': get_diets(),
         'allergens': get_allergens(),
+        'nutrition_facts': get_all_nutrition_facts(),
         'roles': get_roles(),
         'schools': get_schools(),
         'grad_years': get_grad_years(),
+        'date_options': get_dates(),
         'results': search_results,
         'plot_div': get_plot(search_results)
     }
@@ -40,6 +43,9 @@ def get_search_results(request):
 
             if request.POST['dish_name']:
                 results = results.filter(name=request.POST['dish_name'])
+
+            if request.POST['ingredient']:
+                results = results.filter(ingredientsindish__ingredient__name=request.POST['ingredient'])
 
             if request.POST['diet'] != 'any':
                 results = results.filter(dietaryrestrictionsofdish__dietary_restriction__name=request.POST['diet'])
@@ -89,6 +95,10 @@ def get_avg_dish_ratings(request):
                 avg_ratings = avg_ratings.filter(user__grad_year__isnull=True)
             else:
                 avg_ratings = avg_ratings.filter(user__grad_year=request.POST['grad_year'])
+
+        if request.POST['date'] != 'any':
+            date = datetime.datetime.today() - datetime.timedelta(days=int(request.POST['date']))
+            avg_ratings = avg_ratings.filter(datetime__gt=date)
 
     return pd.DataFrame(
         avg_ratings.values('dish_id')

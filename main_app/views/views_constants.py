@@ -27,3 +27,9 @@ primary_nutrition_facts = {
     'protein',
 }
 
+dates_list = [
+    # ('day', '1'),
+    ('week', '7'),
+    ('month', '31'),
+    ('year', '356'),
+]
